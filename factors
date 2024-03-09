@@ -1,27 +1,15 @@
 #!/usr/bin/python3
-"""Factorize given set of positive numbers in a file into the product of two small numbers."""
+"""Factorize given set of numbers in a file into the product of two small numbers."""
 from sys import argv
 
 
 def factorize(number_to_check):
     """Find two small numbers that multiply to give a given number."""
-    i = 2
-
-    if number_to_check < 2:
-        print("Cannot factorize numbers less than 2.")
-        return
-
-    while i * i <= number_to_check:
+    for i in range(2, int(number_to_check**0.5) + 1):
         if number_to_check % i == 0:
-            print(
-                "{:.0f} = {:.0f} * {:.0f}".format(
-                    number_to_check, i, number_to_check // i
-                )
-            )
+            print("{}={}*{}".format(number_to_check, i, number_to_check // i))
             return
-        i += 1
-
-    print("{:.0f} is a prime number.".format(number_to_check))
+    print("{}={}*1".format(number_to_check))
 
 
 if len(argv) != 2:
@@ -31,16 +19,11 @@ if len(argv) != 2:
 try:
     with open(argv[1], "r") as file:
         for line in file:
-            try:
-                number_to_check = int(line.strip())
-                factorize(number_to_check)
-            except ValueError:
-                print(
-                    "Error: Invalid input - '{}' is not a valid integer.".format(
-                        line.strip()
-                    )
-                )
+            number_to_check = int(line.strip())
+            factorize(number_to_check)
 except FileNotFoundError:
     print("Error: File not found.")
+except ValueError:
+    print("Error: Invalid input. Please make sure the file contains valid integers.")
 except Exception as e:
     print("An unexpected error occurred:", e)
