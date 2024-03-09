@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""Factorize given set of numbers in a file into the product of two small numbers."""
+"""
+Factorize given set of numbers in a file into the product of two small numbers.
+"""
+
 from sys import argv
 
 def factorize(number_to_check):
@@ -17,11 +20,16 @@ if len(argv) != 2:
 try:
     with open(argv[1], 'r') as file:
         for line in file:
-            number_to_check = int(line.strip())
-            factorize(number_to_check)
+            try:
+                number_to_check = int(line.strip())
+                if number_to_check < 0:
+                    raise ValueError("Negative number detected.")
+                factorize(number_to_check)
+            except ValueError:
+                print("Error: Invalid input on line '{}'. Please make sure the file contains valid non-negative integers.".format(line.strip()))
 except FileNotFoundError:
-    print("Error: File not found.")
-except ValueError:
-    print("Error: Invalid input. Please make sure the file contains valid integers.")
+    print("Error: File '{}' not found.".format(argv[1]))
+except PermissionError:
+    print("Error: Permission denied to access file '{}'.".format(argv[1]))
 except Exception as e:
     print("An unexpected error occurred:", e)
