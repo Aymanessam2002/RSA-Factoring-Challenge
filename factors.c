@@ -24,7 +24,7 @@ int main()
         }
 
         factor2 = num / factor1;
-        printf("%lld = %ld * %ld\n", num, factor2, factor1);
+        printf("%lld=%ld*%ld\n", num, factor1, factor2);
     }
     return 0;
 }

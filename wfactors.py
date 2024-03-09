@@ -25,4 +25,4 @@ lines = file.readlines()
 for line in lines:
     num = int(line.rstrip())
     factor2, factor1 = factorize(num)
-    print(f"{num} = {factor2} * {factor1}")
+    print(f"{num}={factor1}*{factor2}")
