@@ -1,33 +1,27 @@
 #!/usr/bin/python3
-import sys
+"""Factorize given set of numbers in a file into the product of two small numbers."""
+from sys import argv
 
+def factorize(number_to_check):
+    """Find two small numbers that multiply to give a given number."""
+    for i in range(2, int(number_to_check ** 0.5) + 1):
+        if number_to_check % i == 0:
+            print("{}={}*{}".format(number_to_check, i, number_to_check // i))
+            return
+    print("{}={}*1".format(number_to_check))
 
-def factorize(num):
-    """ Generate 2 factors for a given number"""
-    factor1 = 2
-    while num % factor1:
-        if factor1 * factor1 > num:
-            return (num, 1)
-        factor1 += 1
-
-    factor2 = num // factor1
-    return (factor1, factor2)
-
-
-if len(sys.argv) != 2:
-    sys.exit(f"Wrong usage: {sys.argv[0]} <file_path>")
-
-filename = sys.argv[1]
+if len(argv) != 2:
+    print("Usage: {} <filename>".format(argv[0]))
+    exit(1)
 
 try:
-    with open(filename, 'r') as file:
+    with open(argv[1], 'r') as file:
         for line in file:
-            num = int(line.rstrip())
-            factor1, factor2 = factorize(num)
-            print(f"{num}={factor1}*{factor2}")
+            number_to_check = int(line.strip())
+            factorize(number_to_check)
 except FileNotFoundError:
-    sys.exit("Error: File not found.")
+    print("Error: File not found.")
 except ValueError:
-    sys.exit("Error: Invalid input. Please make sure the file contains valid integers.")
+    print("Error: Invalid input. Please make sure the file contains valid integers.")
 except Exception as e:
-    sys.exit(f"An unexpected error occurred: {e}")
+    print("An unexpected error occurred:", e)
