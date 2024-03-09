@@ -11,25 +11,22 @@ def factorize(number_to_check):
         if number_to_check % i == 0:
             print("{}={}*{}".format(number_to_check, i, number_to_check // i))
             return
-    print("{}={}*1".format(number_to_check))
+    print("{}=1*{}".format(number_to_check, number_to_check))
 
 if len(argv) != 2:
-    print("Usage: {} <filename>".format(argv[0]))
+    print("Usage: {} <file>".format(argv[0]))
     exit(1)
 
 try:
     with open(argv[1], 'r') as file:
         for line in file:
-            try:
-                number_to_check = int(line.strip())
-                if number_to_check < 0:
-                    raise ValueError("Negative number detected.")
-                factorize(number_to_check)
-            except ValueError:
-                print("Error: Invalid input on line '{}'. Please make sure the file contains valid non-negative integers.".format(line.strip()))
+            number_to_check = int(line.strip())
+            factorize(number_to_check)
 except FileNotFoundError:
     print("Error: File '{}' not found.".format(argv[1]))
 except PermissionError:
     print("Error: Permission denied to access file '{}'.".format(argv[1]))
+except ValueError:
+    print("Error: Invalid input. Please make sure the file contains valid natural numbers greater than 1.")
 except Exception as e:
     print("An unexpected error occurred:", e)
