@@ -1,23 +1,30 @@
+// factors.c
 #include <stdio.h>
 
 int main()
 {
-    long long int num = 239809320265259;
-    long int factor1 = 2;
+    long long int num;
+    long int factor1;
     long int factor2;
 
-    while (num % factor1)
+    while (scanf("%lld", &num) != EOF)
     {
-        if (factor1 <= num)
+        factor1 = 2;
+        while (num % factor1)
         {
-            factor1++;
+            if (factor1 <= num)
+            {
+                factor1++;
+            }
+            else
+            {
+                printf("Error: Unable to factorize %lld\n", num);
+                return (-1);
+            }
         }
-        else {
-            return (-1);
-        }
-    }
 
-    factor2 = num / factor1;
-    printf("%lld = %ld * %ld\n", num, factor2, factor1);
-    return (0);
+        factor2 = num / factor1;
+        printf("%lld = %ld * %ld\n", num, factor2, factor1);
+    }
+    return 0;
 }
